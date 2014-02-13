@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using UltimateTeam.Toolkit.Constants;
@@ -42,6 +42,8 @@ namespace UltimateTeam.Toolkit.Factories
         private Func<IFutRequest<PurchasedItemsResponse>> _purchaseditemsRequestFactory;
 
         private Func<AuctionDetails, IFutRequest<ListAuctionResponse>> _listAuctionRequestFactory;
+
+        private Func<IEnumerable<AuctionInfo>, IFutRequest<byte>> _addToWatchlistRequestFactory;
 
         private Func<IEnumerable<AuctionInfo>, IFutRequest<byte>> _removeFromWatchlistRequestFactory;
 
@@ -299,6 +301,26 @@ namespace UltimateTeam.Toolkit.Factories
                 _listAuctionRequestFactory = value;
             }
         }
+
+        public Func<IEnumerable<AuctionInfo>, IFutRequest<byte>> AddToWatchlistRequestFactory
+        {
+            get
+            {
+                return _addToWatchlistRequestFactory ?? (_addToWatchlistRequestFactory = info => new AddToWatchlistRequest(info)
+                {
+                    PhishingToken = PhishingToken,
+                    SessionId = SessionId,
+                    HttpClient = HttpClient,
+                    Resources = _resources
+                });
+            }
+            set
+            {
+                value.ThrowIfNullArgument();
+                _addToWatchlistRequestFactory = value;
+            }
+        }
+
 
         public Func<IEnumerable<AuctionInfo>, IFutRequest<byte>> RemoveFromWatchlistRequestFactory
         {
