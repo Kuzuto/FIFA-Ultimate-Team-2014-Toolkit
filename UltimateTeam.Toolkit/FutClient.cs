@@ -129,6 +129,13 @@ namespace UltimateTeam.Toolkit
             return _requestFactories.RemoveFromTradePileRequestFactory(auctionInfo).PerformRequestAsync();
         }
 
+        public Task<SendItemToClubResponse> SendItemToClubAsync(ItemData itemData)
+        {
+            itemData.ThrowIfNullArgument();
+
+            return _requestFactories.SendItemToClubRequestFactory(itemData).PerformRequestAsync();
+        }
+
         public Task<SendItemToTradePileResponse> SendItemToTradePileAsync(ItemData itemData)
         {
             itemData.ThrowIfNullArgument();
