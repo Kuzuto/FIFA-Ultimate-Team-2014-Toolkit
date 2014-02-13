@@ -35,6 +35,8 @@ namespace UltimateTeam.Toolkit
         Task<ListAuctionResponse> ListAuctionAsync(AuctionDetails auctionDetails);
 
         Task AddToWatchlistRequest(AuctionInfo auctionInfo);
+        
+        Task AddToWatchlistRequest(IEnumerable<AuctionInfo> auctionInfo);
 
         Task RemoveFromWatchlistAsync(AuctionInfo auctionInfo);
 
