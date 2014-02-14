@@ -51,6 +51,8 @@ namespace UltimateTeam.Toolkit.Factories
 
         private Func<ItemData, IFutRequest<SendItemToTradePileResponse>> _sendItemToTradePileRequestFactory;
 
+        private Func<ItemData, IFutRequest<SendItemToClubResponse>> _sendItemToClubRequestFactory;
+
         private Func<IEnumerable<long>, IFutRequest<QuickSellResponse>> _quickSellRequestFactory;
 
         private Func<IFutRequest<PileSizeResponse>> _pileSizeRequestFactory;
@@ -357,6 +359,25 @@ namespace UltimateTeam.Toolkit.Factories
             {
                 value.ThrowIfNullArgument();
                 _removeFromTradePileRequestFactory = value;
+            }
+        }
+
+        public Func<ItemData, IFutRequest<SendItemToClubResponse>> SendItemToClubRequestFactory
+        {
+            get
+            {
+                return _sendItemToClubRequestFactory ?? (_sendItemToClubRequestFactory = itemData => new SendItemToClubRequest(itemData)
+                {
+                    PhishingToken = PhishingToken,
+                    SessionId = SessionId,
+                    HttpClient = HttpClient,
+                    Resources = _resources
+                });
+            }
+            set
+            {
+                value.ThrowIfNullArgument();
+                _sendItemToClubRequestFactory = value;
             }
         }
 
